@@ -1,2 +1,2 @@
-export const queries = ` fetchRentalPlaces(lat:
-Float,lng:Float) :[Place]`;
+export const queries = `
+ fetchRentalPlaces(lat:Float,lng:Float) :[RentalPlace] `;

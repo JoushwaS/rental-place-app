@@ -22,5 +22,5 @@ type RentalPlace {
 
   rentedById: String
   address: String
-  coordinates: [Coordinates]
+  coordinates: Coordinates
 }`;

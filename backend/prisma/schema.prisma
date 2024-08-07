@@ -30,7 +30,8 @@ model RentalPlace {
   rentedById String  @db.ObjectId
   address    String
 
-  coordinates Json     // This will store an array of objects with lat and lng fields
+  location   Json    // Stores location data with a "type" and "coordinates" field
+
 }
 
 model User {

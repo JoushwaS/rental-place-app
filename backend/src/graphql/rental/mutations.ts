@@ -3,5 +3,5 @@ export const mutations = `
     placeName: String!,
     rentedById: String,
     address: String,
-    coordinates: [CoordinatesInput]
+    coordinates: CoordinatesInput
   ): RentalPlace`;

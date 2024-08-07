@@ -49,6 +49,7 @@
     "http": "^0.0.1-security",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.1",
+    "mongodb": "^6.8.0",
     "mongoose": "^8.5.2",
     "nodemon": "^3.1.4",
     "rental-service-backend": "file:",

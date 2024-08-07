@@ -14,15 +14,20 @@ export const seedRentals = async () => {
 
     // Generate  rentals
     for (let i = 0; i < seed_data; i++) {
+      // Generate random coordinates
+      const coordinates = faker.location.nearbyGPSCoordinate({
+        origin: [24.9124684, 67.1004981],
+        radius: 1000,
+        isMetric: true,
+      });
       const rental = {
         placeName: faker.location.street(),
         rentedById: users[Math.floor(Math.random() * users.length)].id,
         address: faker.location.streetAddress(),
-        coordinates: faker.location.nearbyGPSCoordinate({
-          origin: [24.9124684, 67.1004981],
-          radius: 1000,
-          isMetric: true,
-        }),
+        location: {
+          type: "Point",
+          coordinates: [coordinates[0], coordinates[1]], // MongoDB expects [lng, lat]
+        },
       };
       rentals.push(rental);
     }
