@@ -54,60 +54,13 @@ export const verifyToken = async (
   } catch (error) {
     logger.error(
       `Unauthorized user trying to access the route ==> ${JSON.stringify(
-        error.message
+        " error?.message"
       )}`
     );
     sendErrorResponse({
       res,
-      error: error.message,
+      error: "error?.message",
       statusCode: 401,
-    });
-  }
-};
-
-export const verifyRecaptcha = async (
-  req: any,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
-  try {
-    const token = req.body.recaptcha_response;
-    if (!token) {
-      throw new Error("Recaptcha token is required");
-    }
-
-    const url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`;
-
-    fetch(url, { method: "POST" })
-      .then((response) => response.json())
-      .then((google_response) => {
-        if (google_response.success && google_response.score > 0.5) {
-          return next(); // Recaptcha passed
-        }
-        sendErrorResponse({
-          res,
-          error: "Recaptcha verification failed",
-          statusCode: 400,
-        });
-      })
-      .catch((error) => {
-        logger.error(
-          `Error while verifying recaptcha ==> ${JSON.stringify(error.message)}`
-        );
-        sendErrorResponse({
-          res,
-          error: error.message,
-          statusCode: 400,
-        });
-      });
-  } catch (error) {
-    logger.error(
-      `Error while verifying recaptcha ==> ${JSON.stringify(error.message)}`
-    );
-    sendErrorResponse({
-      res,
-      error: error.message,
-      statusCode: 400,
     });
   }
 };
