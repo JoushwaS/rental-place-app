@@ -39,3 +39,12 @@ export interface UserInput {
 export interface CustomRequest extends Request {
   reqUser: User;
 }
+
+export interface RentalPlace {
+  placeName: string;
+  rentedBy: User;
+  rentedById: string;
+
+  address: string;
+  coordinates: [Number, Number];
+}

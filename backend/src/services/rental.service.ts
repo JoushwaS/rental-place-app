@@ -5,6 +5,7 @@ const prisma = new PrismaClient();
 const RentalService = {
   createRental: async (data: any): Promise<any> => {
     try {
+      console.log("data>>", data);
       const rental = await prisma.rentalPlace.create({
         data: {
           ...data,

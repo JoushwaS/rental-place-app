@@ -14,12 +14,12 @@ datasource db {
 }
 
 type Coordinates {
-  lat Int @default(0)
-  lng Int @default(0)
+  lat Float @default(0)
+  lng Float @default(0)
 }
 
 type Address {
-  coordinates Int[]
+  coordinates Float[]
   street      String
 }
 
@@ -28,7 +28,9 @@ model RentalPlace {
   placeName  String
   rentedBy   User   @relation(fields: [rentedById], references: [id])
   rentedById String  @db.ObjectId
-  address    Address
+  address    String
+
+  coordinates Json     // This will store an array of objects with lat and lng fields
 }
 
 model User {

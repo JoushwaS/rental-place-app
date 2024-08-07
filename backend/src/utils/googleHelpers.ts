@@ -13,7 +13,7 @@ export const getNearbyRentalPlaces = async (
   const apiKey = process.env.GOOGLE_MAPS_KEY as unknown as string;
   const radius = 500; // Radius in meters
 
-  const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${radius}&type=rental&key=${apiKey}`;
+  const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${radius}&type=hotel&key=${apiKey}`;
 
   try {
     const response = await axios.get(url);

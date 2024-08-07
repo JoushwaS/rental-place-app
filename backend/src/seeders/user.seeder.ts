@@ -8,7 +8,7 @@ export const seedUsers = async () => {
   try {
     const users: any = [];
 
-    // Generate 10 users
+    // Generate  users
     for (let i = 0; i < seed_data; i++) {
       const user: UserInput = {
         name: faker.person.firstName(),
@@ -16,7 +16,11 @@ export const seedUsers = async () => {
         password:
           "$2a$10$Vi9s8VjLfHT1smmFdTlWyOq7relxXNx6rHla2XdQkfNTdGl8/D8OS",
         location: {
-          coordinates: faker.location.nearbyGPSCoordinate(),
+          coordinates: faker.location.nearbyGPSCoordinate({
+            origin: [24.9124684, 67.1004981],
+            radius: 1000,
+            isMetric: true,
+          }),
           street: faker.location.streetAddress(),
         },
       };

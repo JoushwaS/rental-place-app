@@ -16,7 +16,6 @@ const createApolloGraphQLServer = async () => {
                   ${User.mutations}           
                   ${Rental.mutations}           
             }
-    
         `,
     resolvers: {
       Query: { ...Rental.resolvers.queries, ...User.resolvers.queries },

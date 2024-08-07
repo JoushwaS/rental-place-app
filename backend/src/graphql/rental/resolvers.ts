@@ -1,5 +1,5 @@
 import RentalService from "../../services/rental.service";
-import { fetchRentalPlaces } from "../../types";
+import { fetchRentalPlaces, RentalPlace } from "../../types";
 
 const queries = {
   fetchRentalPlaces: async (parent: any, { lat, lng }: fetchRentalPlaces) => {
@@ -11,5 +11,10 @@ const queries = {
     return rentalPlaces;
   },
 };
-const mutations = {};
+const mutations = {
+  createRental: async (parent: any, data: RentalPlace) => {
+    const rental = await RentalService.createRental(data);
+    return rental;
+  },
+};
 export const resolvers = { queries, mutations };
