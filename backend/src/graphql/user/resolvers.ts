@@ -11,7 +11,7 @@ const mutations = {
     });
     return user;
   },
-  loginUser: async (parent: any, { name, email, password }: UserInput) => {
+  loginUser: async (parent: any, { email, password }: UserInput) => {
     const user = await AuthService.loginUser({
       email,
       password,

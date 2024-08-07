@@ -12,12 +12,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "format:prisma": "npx prisma format",
     "migrate:up": "npx prisma db push --accept-data-loss",
-    "migrate:reset": " prisma migrate reset "
+    "migrate:reset": " prisma migrate reset ",
+    "seed": "npx ts-node-dev src/seeders"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@babel/core": "^7.25.2",
     "@babel/node": "^7.25.0",
     "@babel/preset-env": "^7.25.3",

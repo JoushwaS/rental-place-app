@@ -11,8 +11,6 @@ type DecodedTokenType = {
   exp: number;
 };
 
-export const CR_EMAIL_TO = process.env.TO_EMAIL || "info@conceptrecall.com";
-
 export type DecodedLoginTokenType = {
   _id: string;
   name: string;

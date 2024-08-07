@@ -23,7 +23,7 @@ export interface UserTypes extends Document {
 }
 
 export interface UserInput {
-  name: string;
+  name?: string;
   email: string;
   password: string;
 }

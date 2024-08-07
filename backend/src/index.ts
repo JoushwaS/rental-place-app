@@ -2,12 +2,12 @@ import express from "express";
 import { json } from "body-parser";
 import cors from "cors";
 
-import dotenv from "dotenv";
 import http from "http";
 import logger from "./utils/logger";
 import createApolloGraphQLServer from "./graphql";
 const { expressMiddleware } = require("@apollo/server/express4");
 
+import dotenv from "dotenv";
 dotenv.config({
   path: ".env",
 });
