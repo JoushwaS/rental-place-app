@@ -1,0 +1,36 @@
+.loading-page-container {
+  width: 100%;
+  height: 100vh;
+  /* background-color: #cfd3db; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-page-container img {
+  width: 150px;
+  height: 150px;
+}
+
+.loading-page-container .floated-circle-1 {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background-color: var(--primary-color1);
+  top: -100px;
+  right: -100px;
+}
+
+.loading-page-container .floated-circle-2 {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background-color: "blue";
+  bottom: -100px;
+  left: -100px;
+}

@@ -5,7 +5,9 @@ import { MongoClient, Db } from "mongodb";
 const prisma = new PrismaClient();
 const mongoClient = new MongoClient(process.env.MONGO_DB_URL || "", {});
 let db: Db;
-
+export interface FetchRentalPlacesByUserIdParams {
+  rentedById: string;
+}
 mongoClient
   .connect()
   .then((client) => {
@@ -34,7 +36,7 @@ const RentalService = {
   fetchRentalPlaces: async ({
     lat,
     lng,
-    radius = 5000, // Default radius in meters
+    radius = 10000, // Default radius in meters
   }: {
     lat: number;
     lng: number;
@@ -53,7 +55,7 @@ const RentalService = {
             $geoWithin: {
               $centerSphere: [
                 [lng, lat], // MongoDB expects [lng, lat]
-                10000,
+                radiusInRadians,
               ],
             },
           },
@@ -65,6 +67,27 @@ const RentalService = {
     } catch (error) {
       console.error("Error fetching rental places:", error);
       return error;
+    }
+  },
+
+  fetchRentalPlacesByUserId: async ({
+    rentedById,
+  }: FetchRentalPlacesByUserIdParams): Promise<any> => {
+    console.log("fetchRentalPlacesByUserId>>>", rentedById);
+    try {
+      const rentalPlaces = await prisma.rentalPlace.findMany({
+        where: {
+          rentedById,
+        },
+      });
+
+      console.log("rentalPlaces>>>", rentalPlaces);
+      return rentalPlaces;
+    } catch (error) {
+      console.error("Error fetching rental places by user:", error);
+      return error;
+    } finally {
+      await prisma.$disconnect();
     }
   },
 };

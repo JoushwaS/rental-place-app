@@ -1,4 +1,6 @@
-import RentalService from "../../services/rental.service";
+import RentalService, {
+  FetchRentalPlacesByUserIdParams,
+} from "../../services/rental.service";
 import { fetchRentalPlaces, RentalPlace } from "../../types";
 
 const queries = {
@@ -7,6 +9,16 @@ const queries = {
     const rentalPlaces = await RentalService.fetchRentalPlaces({
       lat,
       lng,
+    });
+    return rentalPlaces;
+  },
+  fetchRentalPlacesByUserId: async (
+    parent: any,
+    { rentedById }: FetchRentalPlacesByUserIdParams
+  ) => {
+    console.log("fetchRentalPlaces");
+    const rentalPlaces = await RentalService.fetchRentalPlacesByUserId({
+      rentedById,
     });
     return rentalPlaces;
   },
