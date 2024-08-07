@@ -1,35 +1,54 @@
 import { PrismaClient } from "@prisma/client";
-import { hashPassword } from "../utils/helpers";
+import { comparePassword, generateJWT, hashPassword } from "../utils/helpers";
 import logger from "../utils/logger";
+import { UserInput, userLogin } from "../types";
 const prisma = new PrismaClient();
 
 const AuthService = {
-  async registerUser(
-    name: string,
-    password: string,
-    email: string
-  ): Promise<void> {
+  async generateJwtToken(payload: object): Promise<string> {
+    return generateJWT(payload);
+  },
+  async registerUser({ name, password, email }: UserInput): Promise<any> {
     // TODO: Implement user registration logic using Prisma
+
     const hashedPass = await hashPassword(password);
     try {
-      const user = await prisma.user.create({
+      const result = await prisma.user.create({
         data: {
           name: name,
           email: email,
           password: hashedPass,
         },
       });
+      return result;
     } catch (error) {
-      //   sendErrorResponse({
-      //     error: error !== "" ? error?.message : "",
-      //     statusCode: 500,
-      //   });
       logger.error("Error while creating user");
+      return error;
     }
   },
-  async loginUser(username: string, password: string): Promise<boolean> {
+  async loginUser({ email, password }: userLogin): Promise<any> {
     // TODO: Implement user login logic using Prisma
-    return false;
+    let result = {};
+    try {
+      const user = await prisma.user.findUnique({
+        where: {
+          email: email,
+        },
+      });
+      if (!user) {
+        throw new Error("User not found");
+      }
+      const isPasswordValid = await comparePassword(user.password, password);
+      if (!isPasswordValid) {
+        throw new Error("Invalid password");
+      }
+      const token = generateJWT({ email: user.email, name: user.name });
+      result = { ...user, token: token };
+      return result;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
   },
   async logoutUser(): Promise<void> {
     // TODO: Implement user logout logic using Prisma
