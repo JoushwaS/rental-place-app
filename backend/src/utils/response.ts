@@ -1,48 +1,48 @@
-import { Response } from 'express'
+import { Response } from "express";
 
 type SuccessResponseType = {
-    data?: object
-    message: string
-    token?: string
-    status: boolean
-}
+  data?: object;
+  message: string;
+  token?: string;
+  status: boolean;
+};
 
 type ErrorResponseType = {
-    status: boolean
-    error?: string
-}
+  status: boolean;
+  error?: string;
+};
 
 type SuccessParamType = {
-    res: Response
-    data?: object
-    token?: string
-    message?: string
-    statusCode?: number
-}
+  res: Response;
+  data?: object;
+  token?: string;
+  message?: string;
+  statusCode?: number;
+};
 
 type ErrorParamType = {
-    res: Response
-    error: string
-    statusCode?: number
-}
+  res?: Response;
+  error: string;
+  statusCode?: number;
+};
 export const sendSuccessResponse = ({
-    res,
-    data,
-    token,
-    message = 'Success',
-    statusCode = 200,
+  res,
+  data,
+  token,
+  message = "Success",
+  statusCode = 200,
 }: SuccessParamType): void => {
-    const responseObj: SuccessResponseType = { message, status: true }
-    if (data) responseObj.data = data
-    if (token) responseObj.token = token
-    res.status(statusCode).send(responseObj)
-}
+  const responseObj: SuccessResponseType = { message, status: true };
+  if (data) responseObj.data = data;
+  if (token) responseObj.token = token;
+  res.status(statusCode).send(responseObj);
+};
 
 export const sendErrorResponse = ({
-    res,
-    error,
-    statusCode = 500,
+  res,
+  error,
+  statusCode = 500,
 }: ErrorParamType): void => {
-    const responseObj: ErrorResponseType = { error, status: false }
-    res.status(statusCode).send(responseObj)
-}
+  const responseObj: ErrorResponseType = { error, status: false };
+  res?.status(statusCode).send(responseObj);
+};
