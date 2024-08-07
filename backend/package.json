@@ -18,24 +18,29 @@
     "@babel/node": "^7.25.0",
     "@babel/preset-env": "^7.25.3",
     "@types/bcrypt": "^5.0.2",
-    "@types/jsonwebtoken": "^9.0.2"
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/node": "^22.1.0",
+    "typescript": "^5.5.4"
   },
   "dependencies": {
-    "apollo-server-express": "^3.13.0",
+    "@apollo/server": "^4.7.5",
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "chalk": "4.1.0",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
-    "graphql": "^16.9.0",
+    "graphql": "^16.7.1",
+    "graphql-yoga": "^5.6.3",
     "helmet": "^7.1.0",
     "http": "^0.0.1-security",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^8.5.2",
     "nodemon": "^3.1.4",
-    "typescript": "^5.5.4",
     "winston": "^3.10.0"
   }
 }

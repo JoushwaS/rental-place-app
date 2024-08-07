@@ -1,6 +1,5 @@
 import { sign, verify } from "jsonwebtoken";
 import dotenv from "dotenv";
-import { UserRole } from "../types";
 import { hash, compare } from "bcryptjs";
 
 dotenv.config();

@@ -1,7 +1,16 @@
-import { Schema } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
 import { UserTypes } from "../../types";
-
-const UserSchema = new Schema<UserTypes>(
+const locationSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    default: "Point",
+  },
+  coordinates: {
+    type: [Number],
+    index: "2dsphere",
+  },
+});
+const UserModel = new Schema<UserTypes>(
   {
     name: {
       type: String,
@@ -19,7 +28,7 @@ const UserSchema = new Schema<UserTypes>(
       required: true,
       select: false,
     },
-
+    location: locationSchema,
     isActive: {
       type: Boolean,
       default: true,
@@ -29,5 +38,8 @@ const UserSchema = new Schema<UserTypes>(
     timestamps: true,
   }
 );
-UserSchema.index({ name: "text", email: "text" });
+UserModel.index({ name: "text", email: "text" });
+UserModel.index({ userLocation: "2dsphere" });
+const UserSchema = model("users", UserModel);
+
 export default UserSchema;
