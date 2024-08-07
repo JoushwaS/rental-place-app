@@ -14,7 +14,11 @@ export const seedUsers = async () => {
         name: faker.person.firstName(),
         email: faker.internet.email(),
         password:
-          "$2a$10$nvEUutywhAx8iRGcVN6pM.ukWAP2KP1H2M7YT1XbMoWFSz6issqVy",
+          "$2a$10$Vi9s8VjLfHT1smmFdTlWyOq7relxXNx6rHla2XdQkfNTdGl8/D8OS",
+        location: {
+          coordinates: faker.location.nearbyGPSCoordinate(),
+          street: faker.location.streetAddress(),
+        },
       };
       users.push(user);
     }

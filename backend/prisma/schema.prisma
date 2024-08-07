@@ -19,14 +19,14 @@ type Coordinates {
 }
 
 type Address {
-  coordinates Coordinates?
+  coordinates Int[]
   street      String
 }
 
 model RentalPlace {
   id         String  @id @default(auto()) @map("_id") @db.ObjectId
   placeName  String
-  rentedBy   User?   @relation(fields: [rentedById], references: [id])
+  rentedBy   User   @relation(fields: [rentedById], references: [id])
   rentedById String  @db.ObjectId
   address    Address
 }
@@ -38,7 +38,7 @@ model User {
   email     String   @unique
   password  String
   name      String?
-  location  Address
+  location  Address?
 
   rentalPlaces RentalPlace[]
 }
