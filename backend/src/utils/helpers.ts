@@ -1,6 +1,5 @@
 import { sign, verify } from "jsonwebtoken";
 import dotenv from "dotenv";
-import { UserRole } from "../types";
 import { hash, compare } from "bcryptjs";
 
 dotenv.config();
@@ -11,8 +10,6 @@ type DecodedTokenType = {
   iat: number;
   exp: number;
 };
-
-export const CR_EMAIL_TO = process.env.TO_EMAIL || "info@conceptrecall.com";
 
 export type DecodedLoginTokenType = {
   _id: string;

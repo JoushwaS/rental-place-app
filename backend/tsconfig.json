@@ -13,7 +13,7 @@
     "module": "commonjs" /* Specify what module code is generated. */,
     "rootDir": "src" /* Specify the root folder within your source files. */,
     "types": [
-      "jest",
+      // "jest",
       "node"
     ] /* Specify type package names to be included without being referenced in a source file. */,
     "resolveJsonModule": true /* Enable importing .json files. */,
