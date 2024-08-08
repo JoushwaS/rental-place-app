@@ -24,7 +24,6 @@ function MapComponent({ defaultCenter, zoom = 40, locationList }) {
 
   const onUnmount = React.useCallback(function callback(map) {}, []);
 
-  console.log("locationList>", locationList);
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}

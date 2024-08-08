@@ -21,7 +21,6 @@ const Register = () => {
 
   const onFinish = (values) => {
     try {
-      console.log("Success:", values);
       createUser({
         variables: {
           name: values.name,

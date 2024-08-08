@@ -104,8 +104,6 @@ function Dashboard() {
   }, [dataFetchUserRentalPlaces, refetch]);
 
   const handleAddRentalPlace = () => {
-    console.log("Add Rental Place");
-
     if (rentalPlaceInfo.placeName === "") {
       toast.error("Please enter place name");
       return;
@@ -126,7 +124,6 @@ function Dashboard() {
       },
     })
       .then((res) => {
-        console.log("res", res);
         const { data } = res;
 
         if (data.createRental) {
