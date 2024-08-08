@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { gql, useQuery } from "@apollo/client";
+import { BrowserRouter as Router } from "react-router-dom";
+import Routes from "./Routes/Router";
 
 function App() {
+  const query = gql`
+    query FetchRentalPlaces($rentedById: String) {
+      fetchRentalPlacesByUserId(rentedById: $rentedById) {
+        placeName
+      }
+    }
+  `;
+  const { loading, error, data, refetch } = useQuery(query, {
+    variables: { rentedById: "66b38a98b1907eae4aa5e49c" },
+  });
+  // console.log("data", data);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <Routes />
+      </Router>
+    </>
   );
 }
 

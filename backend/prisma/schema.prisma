@@ -14,21 +14,26 @@ datasource db {
 }
 
 type Coordinates {
-  lat Int @default(0)
-  lng Int @default(0)
+  lat Float @default(0)
+  lng Float @default(0)
 }
 
 type Address {
-  coordinates Coordinates?
+  coordinates Float[]
   street      String
 }
 
 model RentalPlace {
   id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   placeName  String
-  rentedBy   User?   @relation(fields: [rentedById], references: [id])
+  rentedBy   User   @relation(fields: [rentedById], references: [id])
   rentedById String  @db.ObjectId
-  address    Address
+  address    String
+
+  location   Json    // Stores location data with a "type" and "coordinates" field
+
 }
 
 model User {
@@ -38,7 +43,7 @@ model User {
   email     String   @unique
   password  String
   name      String?
-  location  Address
+  location  Address?
 
   rentalPlaces RentalPlace[]
 }
