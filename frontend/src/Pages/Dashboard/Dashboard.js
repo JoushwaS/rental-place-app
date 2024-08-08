@@ -88,64 +88,59 @@ function Dashboard() {
   }, []);
 
   useEffect(() => {
-    if (dataFetchUserRentalPlaces) {
-      const { fetchRentalPlacesByUserId } = dataFetchUserRentalPlaces;
-      if (fetchRentalPlacesByUserId) {
-        const locationList = fetchRentalPlacesByUserId.map((place) => {
-          return {
-            lat: place.location.coordinates[1],
-            lng: place.location.coordinates[0],
-          };
-        });
+    if (dataFetchUserRentalPlaces?.fetchRentalPlacesByUserId) {
+      const locationList =
+        dataFetchUserRentalPlaces.fetchRentalPlacesByUserId.map((place) => ({
+          lat: place.location.coordinates[1],
+          lng: place.location.coordinates[0],
+        }));
 
-        setuserRentalLocationList(locationList);
-      }
+      setuserRentalLocationList(locationList);
     }
-  }, [dataFetchUserRentalPlaces, refetch]);
+  }, [dataFetchUserRentalPlaces]);
 
-  const handleAddRentalPlace = () => {
-    if (rentalPlaceInfo.placeName === "") {
-      toast.error("Please enter place name");
-      return;
-    } else if (rentalPlaceInfo.address === "") {
-      toast.error("Please enter address");
+  const handleAddRentalPlace = async () => {
+    const { placeName, address, location } = rentalPlaceInfo;
+
+    // Validation
+    if (!placeName || !address) {
+      toast.error("Please enter place name and address");
       return;
     }
 
-    createRental({
-      variables: {
-        placeName: rentalPlaceInfo.placeName,
-        rentedById: rentalPlaceInfo.rentedById,
-        address: rentalPlaceInfo.address,
-        coordinates: {
-          lat: rentalPlaceInfo.location.coordinates[1],
-          lng: rentalPlaceInfo.location.coordinates[0],
+    try {
+      const { data } = await createRental({
+        variables: {
+          placeName,
+          rentedById: rentalPlaceInfo.rentedById,
+          address,
+          coordinates: {
+            lat: location.coordinates[1],
+            lng: location.coordinates[0],
+          },
         },
-      },
-    })
-      .then((res) => {
-        const { data } = res;
-
-        if (data.createRental) {
-          toast.success("Rental Place added successfully");
-          setIsModalOpen(false);
-          setrentalPlaceInfo({
-            placeName: "",
-            rentedById: userInfo?.id,
-            address: "",
-            location: {
-              type: "Point",
-              coordinates: [0, 0],
-            },
-          });
-          reset();
-          refetch();
-        }
-      })
-      .catch((error) => {
-        toast.error(error.message);
-        console.log("error", error.message);
       });
+
+      if (data.createRental) {
+        toast.success("Rental Place added successfully");
+        setIsModalOpen(false);
+        setrentalPlaceInfo({
+          placeName: "",
+          rentedById: userInfo?.id,
+          address: "",
+          location: {
+            type: "Point",
+            coordinates: [0, 0],
+          },
+        });
+        await refetch();
+      }
+    } catch (error) {
+      toast.error(error.message);
+      console.error("error", error.message);
+    } finally {
+      reset();
+    }
   };
 
   const handleAddressSelect = (place) => {
