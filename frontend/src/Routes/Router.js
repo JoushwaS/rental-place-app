@@ -8,7 +8,7 @@ import Dashboard from "../Pages/Dashboard/Dashboard";
 export default function RouterComp() {
   return (
     <Routes>
-      {/* <Route path="/" element={<Navigate to="/dashboard" replace />} /> */}
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/dashboard" element={<ProtectedRoute />}>

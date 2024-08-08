@@ -23,4 +23,20 @@ type RentalPlace {
   rentedById: String
   address: String
   coordinates: Coordinates
-}`;
+}
+
+type Location {
+  type: String
+  coordinates: [Float]
+}
+
+
+type FetchUserRentalPlacesResponse {
+  id: ID!
+  placeName: String!
+
+  rentedById: String
+  address: String
+  location: Location
+}
+`;

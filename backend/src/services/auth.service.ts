@@ -13,6 +13,14 @@ const AuthService = {
 
     const hashedPass = await hashPassword(password);
     try {
+      const user = await prisma.user.findUnique({
+        where: {
+          email: email,
+        },
+      });
+      if (user) {
+        throw new Error("Email Already Exists");
+      }
       const result = await prisma.user.create({
         data: {
           name: name,
@@ -22,6 +30,7 @@ const AuthService = {
       });
       return result;
     } catch (error) {
+      console.log(error);
       logger.error("Error while creating user");
       return error;
     }

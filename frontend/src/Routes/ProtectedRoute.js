@@ -7,31 +7,20 @@ export default function ProtectedRoute() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticate, setIsAuthenticate] = useState(false);
 
-  // useEffect(()=>{
+  useEffect(() => {
+    const token = JSON.parse(window.localStorage.getItem("rental-token"));
 
-  //     const token = JSON.parse(window.localStorage.getItem('store-admin'))?.accessToken
-
-  //     if(token){
-  //         (async()=>{
-  //             const result = await GetRequest('/admin/checkAuth')
-  //             if(result?.statusCode == 200 && result?.response == 'Authenticated'){
-  //                 setIsLoading(false)
-  //                 setIsAuthenticate(true)
-  //             }
-  //             else{
-  //                 setIsLoading(false)
-  //             }
-  //         })()
-  //     }
-  //     else{
-  //         setIsLoading(false)
-  //     }
-
-  // },[])
+    if (token) {
+      setIsAuthenticate(true);
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
 
   if (!isLoading) {
     if (!isAuthenticate) {
-      return <Navigate to="/signin" state={{ from: location }} />;
+      return <Navigate to="/login" state={{ from: location }} />;
     }
     return <Outlet />;
   } else {

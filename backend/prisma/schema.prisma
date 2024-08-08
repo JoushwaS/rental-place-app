@@ -25,6 +25,8 @@ type Address {
 
 model RentalPlace {
   id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   placeName  String
   rentedBy   User   @relation(fields: [rentedById], references: [id])
   rentedById String  @db.ObjectId

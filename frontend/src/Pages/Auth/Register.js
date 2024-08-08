@@ -1,11 +1,51 @@
 // src/Register.js
 import React from "react";
-import { Form, Input, Button } from "antd";
-import { Link } from "react-router-dom";
+import { Form, Input, Button, Spin } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { gql, useMutation } from "@apollo/client";
+import { toast } from "react-toastify";
 
 const Register = () => {
+  const navigation = useNavigate();
+
+  const RESGISTER_USER = gql`
+    mutation Mutation($name: String!, $email: String!, $password: String!) {
+      createUser(name: $name, email: $email, password: $password) {
+        name
+        email
+      }
+    }
+  `;
+  const [createUser, { data, loading, error, reset }] =
+    useMutation(RESGISTER_USER);
+
   const onFinish = (values) => {
-    console.log("Success:", values);
+    try {
+      console.log("Success:", values);
+      createUser({
+        variables: {
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        },
+      })
+        .then((res) => {
+          console.log("res", res);
+          const { data } = res;
+
+          if (data.createUser) {
+            toast.success("User Registered successfully");
+            navigation("/login");
+            reset();
+          }
+        })
+        .catch((error) => {
+          toast.error(error.message);
+          console.log("error", error.message);
+        });
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -23,32 +63,67 @@ const Register = () => {
           onFinishFailed={onFinishFailed}
         >
           <Form.Item
-            name="username"
-            rules={[{ required: true, message: "Please input your username!" }]}
+            name="name"
+            rules={[{ required: true, message: "Please input your name!" }]}
           >
-            <Input placeholder="Username" />
+            <Input placeholder="name" />
           </Form.Item>
-
+          <Form.Item
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your email!",
+                type: "email",
+              },
+            ]}
+          >
+            <Input placeholder="Email" />
+          </Form.Item>
           <Form.Item
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
+            hasFeedback
           >
             <Input.Password placeholder="Password" />
           </Form.Item>
 
           <Form.Item
             name="confirmPassword"
+            dependencies={["password"]}
+            hasFeedback
             rules={[
               { required: true, message: "Please confirm your password!" },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error(
+                      "The two passwords that you entered do not match!"
+                    )
+                  );
+                },
+              }),
             ]}
           >
             <Input.Password placeholder="Confirm Password" />
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="w-full">
-              Register
-            </Button>
+            {loading ? (
+              <Spin className="w-full" />
+            ) : (
+              <Button
+                disabled={loading}
+                type="primary"
+                htmlType="submit"
+                className="w-full"
+              >
+                Register
+              </Button>
+            )}
           </Form.Item>
         </Form>
         <div className="text-center mt-4">

@@ -20,7 +20,12 @@ mongoClient
 const RentalService = {
   createRental: async (data: any): Promise<any> => {
     try {
-      console.log("data>>", data);
+      data.location = {
+        type: "Point",
+        coordinates: [data.coordinates.lng, data.coordinates.lat],
+      };
+      delete data.coordinates;
+
       const rental = await prisma.rentalPlace.create({
         data: {
           ...data,

@@ -52,6 +52,7 @@
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.2",
     "nodemon": "^3.1.4",
+    "react-toastify": "^10.0.5",
     "rental-service-backend": "file:",
     "tsc-watch": "^6.2.0",
     "winston": "^3.10.0"
